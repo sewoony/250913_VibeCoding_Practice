@@ -17,6 +17,18 @@ data = {
         '4.19 혁명 당시 울산에서 희생된 학생들의 넋을 기리는 묘역입니다.',
         '국가를 위해 희생, 공헌하신 국가유공자와 참전용사들을 모신 곳입니다.',
         '남북 분단의 현실을 생생하게 느낄 수 있는 역사적 장소입니다.'
+    ],
+    '이미지_URL': [
+        'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202206/06/617e1e40-ed81-424a-ae9c-6a1618a5996c.jpg',
+        'https://korean.visitseoul.net/comm/getImage?srvcId=MEDIA&imgTy=MEDIA&imgNo=161575',
+        'https://www.unmck.or.kr/wp-content/uploads/2021/08/main_image_unmck.jpg',
+        'https://www.daegufacilities.or.kr/damun/images/sub/02_02_02_img01.jpg',
+        'https://www.incheon.go.kr/img/main/slogan_img.jpg',
+        'https://518.org/cms/files/518story_220215161048_1.jpg',
+        'https://www.ncsl.go.kr/img_2016/img_main.jpg',
+        'https://www.ulsan.go.kr/rep_file/view.html?filename=20230217094054.jpg',
+        'https://www.icn.go.kr/icn/images/main/main_visual01.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/f/fa/DMZ_%ED%8C%90%EB%AC%B8%EC%A0%90.jpg'
     ]
 }
 
@@ -24,6 +36,9 @@ df = pd.DataFrame(data)
 
 # Streamlit 앱 구성
 st.set_page_config(page_title="보훈 관련 방문지 안내 🇰🇷", page_icon="✨")
+
+# 메인 페이지 - 보훈 관련 이미지
+st.image("https://www.mvis.go.kr/img/content/main_visual.jpg", use_column_width=True)
 
 st.title("지역별 보훈 관련 방문지 안내 🇰🇷")
 st.markdown("나라를 위해 헌신하신 분들을 기억하고, 그 의미를 되새길 수 있는 장소를 소개해 드려요. 🙏")
@@ -46,14 +61,13 @@ st.markdown("---")
 if not filtered_df.empty:
     for index, row in filtered_df.iterrows():
         with st.expander(f"📍 {row['장소']} ({row['지역']})"):
+            # 각 장소에 대한 대표 이미지
+            st.image(row['이미지_URL'], caption=row['장소'], use_column_width=True)
             st.write(f"**{row['설명']}**")
             st.markdown(f"**➡️ {row['장소']}**에 대해 더 자세히 알아보기:", unsafe_allow_html=True)
-            if '국립' in row['장소']:
-                # 국립 관련 장소는 링크를 제공
-                st.markdown(f"[공식 홈페이지 바로가기](https://www.google.com/search?q={row['장소']} 공식 홈페이지)", unsafe_allow_html=True)
-            else:
-                # 그 외 장소는 구글 검색 링크 제공
-                st.markdown(f"[구글에서 '{row['장소']}' 검색하기](https://www.google.com/search?q={row['장소']})", unsafe_allow_html=True)
+            
+            # 구글 검색 링크 제공
+            st.markdown(f"[구글에서 '{row['장소']}' 검색하기](https://www.google.com/search?q={row['장소']})", unsafe_allow_html=True)
 
 else:
     st.warning("선택하신 지역에는 등록된 보훈 관련 방문지가 없습니다. 다른 지역을 선택해 주세요. 🧐")
