@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 
-# 데이터프레임 생성
+# 데이터프레임 생성 (이전과 동일)
 data = {
     '지역': ['서울', '서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기', '경기'],
     '장소': ['국립서울현충원', '전쟁기념관', '유엔기념공원', '국립신암선열공원', '인천상륙작전기념관', '국립5.18민주묘지', '국립대전현충원', '국립4.19민주묘지(울산)', '국립이천호국원', 'DMZ(비무장지대)'],
@@ -38,18 +38,19 @@ df = pd.DataFrame(data)
 st.set_page_config(page_title="보훈 관련 방문지 안내 🇰🇷", page_icon="✨")
 
 # 메인 페이지 - 보훈 관련 이미지
-st.image("https://www.mvis.go.kr/img/content/main_visual.jpg", use_column_width=True)
+# use_column_width를 use_container_width로 변경
+st.image("https://www.mvis.go.kr/img/content/main_visual.jpg", use_container_width=True)
 
 st.title("지역별 보훈 관련 방문지 안내 🇰🇷")
 st.markdown("나라를 위해 헌신하신 분들을 기억하고, 그 의미를 되새길 수 있는 장소를 소개해 드려요. 🙏")
 
 st.info("🗺️ **지역을 선택하고, 소중한 분들의 발자취를 따라가 보세요!**")
 
-# 지역 선택 드롭다운 메뉴
+# 지역 선택 드롭다운 메뉴 (이전과 동일)
 regions = ['전체'] + sorted(df['지역'].unique().tolist())
 selected_region = st.selectbox("원하는 지역을 선택해 주세요:", regions)
 
-# 선택된 지역에 따라 데이터 필터링
+# 선택된 지역에 따라 데이터 필터링 (이전과 동일)
 if selected_region == '전체':
     filtered_df = df
 else:
@@ -62,11 +63,12 @@ if not filtered_df.empty:
     for index, row in filtered_df.iterrows():
         with st.expander(f"📍 {row['장소']} ({row['지역']})"):
             # 각 장소에 대한 대표 이미지
-            st.image(row['이미지_URL'], caption=row['장소'], use_column_width=True)
+            # use_column_width를 use_container_width로 변경
+            st.image(row['이미지_URL'], caption=row['장소'], use_container_width=True)
             st.write(f"**{row['설명']}**")
             st.markdown(f"**➡️ {row['장소']}**에 대해 더 자세히 알아보기:", unsafe_allow_html=True)
             
-            # 구글 검색 링크 제공
+            # 구글 검색 링크 제공 (이전과 동일)
             st.markdown(f"[구글에서 '{row['장소']}' 검색하기](https://www.google.com/search?q={row['장소']})", unsafe_allow_html=True)
 
 else:
@@ -75,7 +77,7 @@ else:
 st.markdown("---")
 st.markdown("© 2025 대한민국 보훈처 | Made with Streamlit")
 
-# 추가적인 재미 요소
+# 추가적인 재미 요소 (이전과 동일)
 st.sidebar.markdown("## ✨ 함께 기억해요!")
 st.sidebar.markdown("이 앱을 통해 나라를 위해 헌신하신 모든 분께 감사하는 마음을 가져보는 건 어떨까요? 🙏")
 st.sidebar.button("마음속으로 감사 인사 보내기! 💌")
